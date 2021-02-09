@@ -49,9 +49,9 @@
                 @foreach($asset as $asset)
                     <tr>
                         <td>{{$asset->no_asset}}</td>
-                        <td>{{$asset->id_categori}}</td>
-                        <td>{{$asset->id_location}}</td>
-                        <td>{{$asset->id_divisi}}</td>
+                        <td>{{$asset->assetcategori->name_categori}}</td>
+                        <td>{{$asset->officelocation->name_office}}</td>
+                        <td>{{$asset->divisi->name_divisi}}</td>
                         <td>{{$asset->description}}</td>
                         <td>Rp. {{$asset->price}}</td>
                         <td>{{$asset->date_of_purchase}}</td>
