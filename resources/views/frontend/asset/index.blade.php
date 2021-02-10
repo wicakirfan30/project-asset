@@ -1,96 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nissin Transport Indonesia Asset</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.bootstrap4.min.css">
-</head>
-<body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="navbar-nav mr-auto">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">NIssin Indonesia</a>
+
+@extends('layouts.master')
+@section('title','NTI Asset Management - ')
+@section('content')
+
+@push('page-styles')
+<link rel="stylesheet" href="../node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css">
+<link rel="stylesheet" href="../node_modules/prismjs/themes/prism.css">
+@endpush
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4>Asset List</h4>
+                
+                @if (session('status'))
+                <div class="alert alert-primary" role="alert">
+                    {{session('status')}}
+                </div>
+                @endif
             </div>
-        </ul>
-    </div>
-</nav>
-<div class="container-fluid">
-    <h1>Asset List</h1>
-    <p class="letter-5"></p>
-    @if (session('status'))
-        <div class="alert alert-primary" role="alert">
-            {{session('status')}}
+            
+            <div class="card-body">
+                <!-- Button trigger modal -->
+            <button class="btn btn-primary col-0" data-toggle="modal" data-target=".bd-example-modal-lg">Add Data</button>
+            <button class="btn btn-primary col-0">Delete Data</button>
+            <p class=""></p>
+                <div class="table-responsive">
+                    <table class="table table-striped" id="table-2">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                <div class="custom-checkbox custom-control">
+                                <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+                                <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                </div>
+                                </th>
+                                <th>No. Asset</th>
+                                <th>Category Asset</th>
+                                <th>Office Location</th>
+                                <th>Divisi</th>
+                                <th>Description Asset</th>
+                                <th>Price</th>
+                                <th>Purchase Of Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($asset as $asset)
+                            <tr>
+                                <td>
+                                <div class="custom-checkbox custom-control">
+                                    <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                    <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                </div>
+                                </td>
+                                <td>{{$asset->no_asset}}</td>
+                                <td>{{$asset->assetcategori->name_categori}}</td>
+                                <td>{{$asset->officelocation->name_office}}</td>
+                                <td>{{$asset->divisi->name_divisi}}</td>
+                                <td>{{$asset->description}}</td>
+                                <td>Rp. {{$asset->price}}</td>
+                                <td>{{$asset->date_of_purchase}}</td>
+                                <td><a href='#' class="btn btn-secondary">Details</a></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-    @endif
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Add Data</button>
-    <button type="button" class="btn btn-primary">Delete Data</button>
-    <p class="letter-5"></p>
-        <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>No. Asset</th>
-                        <th>Category Asset</th>
-                        <th>Office Location</th>
-                        <th>Divisi</th>
-                        <th>Description Asset</th>
-                        <th>Price</th>
-                        <th>Purchase Of Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach($asset as $asset)
-                    <tr>
-                        <td>{{$asset->no_asset}}</td>
-                        <td>{{$asset->assetcategori->name_categori}}</td>
-                        <td>{{$asset->officelocation->name_office}}</td>
-                        <td>{{$asset->divisi->name_divisi}}</td>
-                        <td>{{$asset->description}}</td>
-                        <td>Rp. {{$asset->price}}</td>
-                        <td>{{$asset->date_of_purchase}}</td>
-                        <td><a href='#'>Details</a></td>
-                    </tr>
-                @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>No. Asset</th>
-                        <th>Category Asset</th>
-                        <th>Office Location</th>
-                        <th>Divisi</th>
-                        <th>Description Asset</th>
-                        <th>Price</th>
-                        <th>Purchase Of Date</th>
-                        <th>Action</th>
-                    </tr>
-                </tfoot>
-            </table>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.8/js/dataTables.fixedHeader.min.js"></script>
-<script>
-$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        fixedHeader: true
-    } );
-} );
-</script>
 
-<!-- MODAL -->
+    @push('js.lib')
+        <!-- JS Libraies -->
+        <script src="../node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="../node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js"></script>
+        <script src="../node_modules/prismjs/prism.js"></script>
+    @endpush
+
+    @push('page.scripts')
+        <script src="../assets/js/page/modules-datatables.js"></script>
+        <script src="../assets/js/page/bootstrap-modal.js"></script>
+    @endpush
+
+    <!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -193,5 +191,8 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-</body>
-</html>
+
+
+@endsection
+
+
