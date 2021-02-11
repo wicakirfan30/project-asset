@@ -14,7 +14,6 @@
         <div class="card">
             <div class="card-header">
                 <h4>Asset List</h4>
-                
                 @if (session('status'))
                 <div class="alert alert-primary" role="alert">
                     {{session('status')}}
@@ -88,7 +87,9 @@
         <script src="../assets/js/page/bootstrap-modal.js"></script>
     @endpush
 
-    <!-- MODAL -->
+@endsection
+
+<!-- MODAL -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -191,8 +192,5 @@
         </div>
     </div>
 </div>
-
-
-@endsection
 
 
